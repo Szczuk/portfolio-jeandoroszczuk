@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jean Doroszczuk — Chef Opérateur / Vidéaste</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Oxanium', sans-serif;
+      background-color: #000000;
+      color: #f2f2f2;
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* OVERLAY DE TRANSITION AU CHARGEMENT */
+    .overlay-transition {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 1000;
+      animation: fadeOutOverlay 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes fadeOutOverlay {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    /* CONTENEUR PRINCIPAL */
+    .conteneur {
+      display: grid;
+      grid-template-columns: 30% 1fr;
+      min-height: 100vh;
+    }
+
+    /* COLONNE GAUCHE */
+    .gauche {
+      padding: 50px 40px 50px 60px;
+      border-right: 1px solid #222;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    header h1 {
+      font-size: 30px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.15;
+      cursor: pointer;
+      display: inline-block;  
+      padding: 0;
+      margin: 0;
+      width: auto;
+      }
+
+    .fonction {
+      color: #888;
+      font-size: 10px;
+      margin-top: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .menu-principal { margin-top: 45px; display: flex; flex-direction: column; gap: 10px; }
+
+    .menu-principal button {
+      background: none;
+      border: none;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 400;
+      color: #777;
+      text-align: left;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 0;
+      transition: color 0.2s;
+      display: inline-block;
+      width: auto;
+    }
+
+    .menu-principal button:hover { color: #fff; }
+    .menu-principal button.actif { color: #fff; }
+
+    .liens-pages {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #222;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .liens-pages a {
+      font-size: 11px;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+
+    .liens-pages a:hover { color: #fff; }
+
+    /* COLONNE DROITE - PROJETS */
+    .droite {
+      position: relative;
+      padding: 50px 60px 50px 15px;
+    }
+
+    .fond-projecteur {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 70%;
+      height: 100vh;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .fond-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 100%);
+    }
+
+    .projets-container { position: relative; z-index: 10; }
+
+    .projet {
+      display: flex;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #fff;
+      cursor: pointer;
+      position: relative;
+      transition: opacity 0.3s ease;
+    }
+
+    .infos-projet { flex: 1; }
+
+    .numero {
+      color: #555;
+      font-size: 10px;
+      font-weight: 300;
+      margin-right: 12px;
+    }
+
+    .titre {
+      font-size: 13px;
+      font-weight: 300;
+      display: inline;
+      transition: all 0.3s ease;
+    }
+
+    .type {
+      color: #666;
+      font-size: 10px;
+      font-weight: 300;
+      margin: 0 8px;
+    }
+
+    .annee {
+      color: #666;
+      font-size: 10px;
+      font-weight: 300;
+    }
+
+    .projet:hover .titre {
+      color: #888;
+      transform: translate(5px, 3px);
+    }
+
+    .projet.grise { opacity: 0.15; }
+    .projet.grise:hover .titre { color: #fff; transform: none; }
+
+    footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid #222;
+      color: #444;
+      font-size: 10px;
+    }
+
+    /* ANIMATION RETOUR */
+    .conteneur.transition-retour {
+      animation: resizeColumnsContract 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes resizeColumnsContract {
+      0% { grid-template-columns: 25% 1fr; }
+      100% { grid-template-columns: 30% 1fr; }
+    }
+
+    @media (max-width: 900px) {
+      .conteneur { grid-template-columns: 1fr; }
+      .gauche {
+        padding: 30px 24px;
+        border-right: none;
+        border-bottom: 1px solid #222;
+        height: auto;
+        position: relative;
+      }
+      .droite { padding: 30px 24px; }
+      .fond-projecteur { display: none; }
+      .projet { flex-wrap: wrap; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay-transition"></div>
+
+  <div class="conteneur" id="mainContainer">
+    <div class="gauche" id="colonneGauche">
+      <header>
+        <a href="index.html" id="retourIndex"><h1>Jean<br>Doroszczuk</h1></a>
+        <p class="fonction">Chef Opérateur / Vidéaste</p>
+      </header>
+
+      <nav class="menu-principal">
+        <button onclick="filtrer('theatre', this)">Théâtre</button>
+        <button onclick="filtrer('cinema', this)">Cinéma</button>
+        <button onclick="filtrer('ateliers', this)">Ateliers</button>
+      </nav>
+
+      <div class="liens-pages">
+        <a href="bio.html">Bio</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+
+    <div class="droite">
+      <div class="fond-projecteur" id="fondProjecteur">
+        <div class="fond-overlay"></div>
+      </div>
+
+      <div class="projets-container">
+        <!-- PROJET 01 -->
+        <a href="infiltre.html" class="projet" data-categorie="theatre"
+           onmouseenter="afficherFond('images_optimized/theatre/infiltre/infrlate-2026.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">01.</span>
+            <span class="titre">L'Infiltré</span>
+            <span class="type">/ Théâtre</span>
+            <span class="annee">2026</span>
+          </div>
+        </a>
+
+        <!-- PROJET 02 -->
+        <a href="autobiographie.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/autobiographie/autobio-001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">02.</span>
+            <span class="titre">Autobiographie d'un blaireau</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2026</span>
+          </div>
+        </a>
+
+        <!-- PROJET 03 -->
+        <a href="chair-monde.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/chair-monde/chair-1.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">03.</span>
+            <span class="titre">Chair-Monde</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2026</span>
+          </div>
+        </a>
+
+        <!-- PROJET 04 -->
+        <a href="indestructible.html" class="projet" data-categorie="theatre"
+           onmouseenter="afficherFond('images_optimized/theatre/indestructible/indestructible-01.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">04.</span>
+            <span class="titre">Indestructible</span>
+            <span class="type">/ Théâtre</span>
+            <span class="annee">2025</span>
+          </div>
+        </a>
+
+        <!-- PROJET 05 -->
+        <a href="perles-garonne.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/perles-garonne/perles-garonne-001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">05.</span>
+            <span class="titre">Les Perles de la Garonne</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2025</span>
+          </div>
+        </a>
+
+        <!-- PROJET 06 -->
+        <a href="pepin.html" class="projet" data-categorie="theatre"
+           onmouseenter="afficherFond('images_optimized/theatre/pepin/pepin-001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">06.</span>
+            <span class="titre">Pépin</span>
+            <span class="type">/ Théâtre</span>
+            <span class="annee">2025</span>
+          </div>
+        </a>
+
+        <!-- PROJET 07 -->
+        <a href="les-loups.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/les-loups/les-loups-001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">07.</span>
+            <span class="titre">Les Loups</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2024</span>
+          </div>
+        </a>
+
+        <!-- PROJET 08 -->
+        <a href="derive-alpine.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/derive-alpine/derive-alpine-001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">08.</span>
+            <span class="titre">Dérive Alpine</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2024</span>
+          </div>
+        </a>
+
+        <!-- PROJET 09 -->
+        <a href="gros-probleme.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/gros-probleme/gros-probleme-001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">09.</span>
+            <span class="titre">Gros Problème</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2024</span>
+          </div>
+        </a>
+
+        <!-- PROJET 10 -->
+        <a href="vieille-terre.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/vieille-terre/vieille-terre-001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">10.</span>
+            <span class="titre">Une vieille terre pour une nouvelle chanson...</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2023</span>
+          </div>
+        </a>
+
+        <!-- PROJET 11 -->
+        <a href="histoire-bouc.html" class="projet" data-categorie="theatre"
+           onmouseenter="afficherFond('images_optimized/theatre/histoire-bouc/histoire-bouc-002.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">11.</span>
+            <span class="titre">L'Histoire du Bouc</span>
+            <span class="type">/ Théâtre</span>
+            <span class="annee">2023</span>
+          </div>
+        </a>
+
+        <!-- PROJET 12 -->
+        <a href="londres.html" class="projet" data-categorie="ateliers"
+           onmouseenter="afficherFond('images_optimized/atelier/londres/londres_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">12.</span>
+            <span class="titre">I'm off to work I have posted on the fridge all the instructions on how to make a revolution</span>
+            <span class="type">/ Ateliers</span>
+            <span class="annee">2022</span>
+          </div>
+        </a>
+
+        <!-- PROJET 13 -->
+        <a href="fremissement.html" class="projet" data-categorie="ateliers"
+           onmouseenter="afficherFond('images_optimized/atelier/fremissement/fremissement_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">13.</span>
+            <span class="titre">Frémissement</span>
+            <span class="type">/ Ateliers</span>
+            <span class="annee">2022</span>
+          </div>
+        </a>
+
+        <!-- PROJET 14 -->
+        <a href="je-serai.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/je-serai/je_serai_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">14.</span>
+            <span class="titre">Je serais bientôt tout à fait morte enfin</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2021</span>
+          </div>
+        </a>
+
+        <!-- PROJET 15 -->
+        <a href="a-place.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/a-place/a_place_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">15.</span>
+            <span class="titre">A place to call home</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2021</span>
+          </div>
+        </a>
+
+        <!-- PROJET 16 -->
+        <a href="gen-2050.html" class="projet" data-categorie="ateliers"
+           onmouseenter="afficherFond('images_optimized/atelier/gen-2050/gen_2050_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">16.</span>
+            <span class="titre">Génération 2050</span>
+            <span class="type">/ Ateliers</span>
+            <span class="annee">2021</span>
+          </div>
+        </a>
+
+        <!-- PROJET 17 -->
+        <a href="bal-des-folles.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/bal-des-folles/bal_des_folles_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">17.</span>
+            <span class="titre">Le Bal des folles</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2021</span>
+          </div>
+        </a>
+
+        <!-- PROJET 18 -->
+        <a href="radins.html" class="projet" data-categorie="cinema"
+           onmouseenter="afficherFond('images_optimized/cinema/radins/radins_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">18.</span>
+            <span class="titre">Les Radins</span>
+            <span class="type">/ Cinéma</span>
+            <span class="annee">2021</span>
+          </div>
+        </a>
+
+        <!-- PROJET 19 -->
+        <a href="coeurs-fugitifs.html" class="projet" data-categorie="theatre"
+           onmouseenter="afficherFond('images_optimized/theatre/coeurs-fugitfs/coeurs_fugitifs_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">19.</span>
+            <span class="titre">Cœurs Fugitifs</span>
+            <span class="type">/ Théâtre</span>
+            <span class="annee">2018-2021</span>
+          </div>
+        </a>
+
+        <!-- PROJET 20 -->
+        <a href="strette.html" class="projet" data-categorie="theatre"
+           onmouseenter="afficherFond('images_optimized/theatre/strette/strette_001.webp')"
+           onmouseleave="effacerFond()">
+          <div class="infos-projet">
+            <span class="numero">20.</span>
+            <span class="titre">Strette</span>
+            <span class="type">/ Théâtre</span>
+            <span class="annee">2017</span>
+          </div>
+        </a>
+
+      </div>
+
+      <footer>© Jean Doroszczuk 2026</footer>
+    </div>
+  </div>
+
+ <script>
+// Fonctions d'affichage du fond
+// TIMER pour gérer l'effacement (évite les conflits d'événements)
+let timerEffacement = null;
+
+function afficherFond(url) {
+  const fond = document.getElementById('fondProjecteur');
+  
+  // Annule tout timer d'effacement en cours
+  if (timerEffacement) {
+    clearTimeout(timerEffacement);
+    timerEffacement = null;
+  }
+  
+  fond.style.backgroundImage = `url('${url}')`;
+  fond.style.opacity = '1';
+}
+
+function effacerFond() {
+  const fond = document.getElementById('fondProjecteur');
+  
+  // Ne démarre l'effacement que si on quitte vraiment le projet
+  // Ajoute un petit délai pour éviter les micro-sorties accidentelles
+  timerEffacement = setTimeout(() => {
+    fond.style.opacity = '0';
+    
+    setTimeout(() => { 
+      fond.style.backgroundImage = 'none'; 
+      timerEffacement = null;
+    }, 500); // Durée du fade-out
+  }, 200); // Délai de sécurité avant d'effacer (plus long = moins de bugs)
+}
+
+// Filtres CORRECTS : on désactive si déjà actif
+function filtrer(categorie, bouton) {
+  const dejaActif = bouton.classList.contains('actif');
+
+  // Désactive TOUS les boutons
+  document.querySelectorAll('.menu-principal button')
+    .forEach(b => b.classList.remove('actif'));
+
+  // SI DÉJÀ ACTIF → on retire TOUT le grisage
+  if (dejaActif) {
+    document.querySelectorAll('.projet').forEach(p => p.classList.remove('grise'));
+    return;
+  }
+
+  // SINON → on active ce filtre
+  bouton.classList.add('actif');
+  document.querySelectorAll('.projet').forEach(p => {
+    p.classList.toggle('grise', p.dataset.categorie !== categorie);
+  });
+}
+
+// Filtres CORRECTS : on désactive si déjà actif
+function filtrer(categorie, bouton) {
+  const dejaActif = bouton.classList.contains('actif');
+
+  // Désactive TOUS les boutons
+  document.querySelectorAll('.menu-principal button')
+    .forEach(b => b.classList.remove('actif'));
+
+  // SI DÉJÀ ACTIF → on retire TOUT le grisage
+  if (dejaActif) {
+    document.querySelectorAll('.projet').forEach(p => p.classList.remove('grise'));
+    return;
+  }
+
+  // SINON → on active ce filtre
+  bouton.classList.add('actif');
+  document.querySelectorAll('.projet').forEach(p => {
+    p.classList.toggle('grise', p.dataset.categorie !== categorie);
+  });
+}
+
+// Animation retour vers index depuis n'importe quelle page
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('#retourIndex, .liens-pages a[href="index.html"]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.body.style.opacity = '0';
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2400);
+    });
+  });
+});
+</script>

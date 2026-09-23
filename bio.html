@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bio — Jean Doroszczuk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Oxanium', sans-serif;
+      background-color: #000000;
+      color: #f2f2f2;
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a, div { color: inherit; text-decoration: none; }
+
+    .overlay-sortie {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 2.4s ease;
+      pointer-events: none;
+    }
+
+    .conteneur {
+      display: grid;
+      grid-template-columns: 40% 1fr;
+      min-height: 100vh;
+    }
+
+    .gauche {
+      padding: 50px 40px 50px 60px;
+      border-right: 1px solid #222;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    header h1 {
+      font-size: 30px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.15;
+      cursor: pointer;
+    }
+
+    .fonction {
+      color: #888;
+      font-size: 10px;
+      margin-top: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .menu-principal { margin-top: 45px; display: flex; flex-direction: column; gap: 10px; }
+
+    .menu-principal a, .menu-principal div {
+      font-size: 11px;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+
+    .menu-principal a:hover, .menu-principal div:hover { color: #fff; }
+
+    .liens-pages {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #222;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .liens-pages a, .liens-pages div {
+      font-size: 11px;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+
+    .liens-pages a.active { color: #fff; }
+    .liens-pages a:hover, .liens-pages div:hover { color: #fff; }
+
+    .droite {
+      position: relative;
+      background-image: url('images_optimized/bio/autre_tigre.webp');
+      background-size: cover;
+      background-position: center;
+      padding: 50px 60px;
+      overflow-y: auto;
+      height: 100vh;
+      opacity: 0;
+      animation: fadeInContent 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes fadeInContent {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .voile {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.35) 100%);
+    }
+
+    .texte-bio {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+      color: #eaeaea;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .texte-bio p { margin-bottom: 22px; }
+
+    @media (max-width: 900px) {
+      .conteneur { grid-template-columns: 1fr; }
+      .gauche {
+        padding: 30px 24px;
+        border-right: none;
+        border-bottom: 1px solid #222;
+        height: auto;
+        position: relative;
+      }
+      .droite {
+        height: auto;
+        padding: 40px 24px;
+        animation: none;
+        opacity: 1;
+      }
+      .overlay-sortie { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay-sortie" id="overlaySortie"></div>
+
+  <div class="conteneur">
+    <div class="gauche">
+      <header>
+        <div id="retourIndex" class="retour-element"><h1>Jean<br>Doroszczuk</h1></div>
+        <p class="fonction">Chef Opérateur / Vidéaste</p>
+      </header>
+
+      <nav class="menu-principal">
+        <div class="retour-element">Retour</div>
+      </nav>
+
+      <div class="liens-pages">
+        <div class="active">Bio</div>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+
+    <div class="droite">
+      <div class="voile"></div>
+      <div class="texte-bio">
+        <p>Après des études d'urbanisme à Sciences-Po Paris, il intègre les arts-décoratifs de Strasbourg puis les beaux-Arts de Lyon où il se forme à la vidéo et au cinéma auprès de Marie Voignier et dont il sort diplômé en 2018.</p>
+        <p>En parallèle d'ateliers de cinéma qu'il donne au forum des images de 2018 à 2022, il commence des collaborations en tant que vidéaste / chef opérateur sur divers projets.</p>
+        <p>Au cinéma, avec Isabelle Prim pour le film « Mens », « Je serai quand même bientôt tout à fait mort enfin » produit par le centre Pompidou et « Les Loups » en 2024, long-métrage en coproduction Vivarium Studio et ECCE Films sélectionné au FID Marseille et le long-métrage « Autobiographie d'un blaireau » en avril 2025, en cours de montage.</p>
+        <p>Au théâtre en création vidéo avec Manon Worms pour « Cœurs fugitifs » et « Indestructible » en 2024, création vidéo et régie pour Océan sur « L'Infiltré » en 2026.</p>
+        <p>Il travaille en tant que chef opérateur pour des films d'artistes comme Liv Schulman, Pauline Ghersi, Capucine Vever, Quentin Goujout...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Script EXÉCUTÉ IMMÉDIATEMENT (pas en attente de DOMContentLoaded)
+    (function() {
+      const elements = document.querySelectorAll('.retour-element');
+      
+      elements.forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const overlay = document.getElementById('overlaySortie');
+          overlay.style.opacity = '1';
+          
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2400);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Infiltré — Jean Doroszczuk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200;300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Oxanium', sans-serif;
+      background-color: #000000;
+      color: #f2f2f2;
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== OVERLAY DE TRANSITION ===== */
+    .overlay-transition {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 1000;
+      animation: fadeOutOverlay 0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes fadeOutOverlay {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    /* ===== CONTENEUR PRINCIPAL ===== */
+    .conteneur {
+      display: grid;
+      grid-template-columns: 40% 1fr;
+      min-height: 100vh;
+      animation: resizeColumns 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    /* Animation du rétrécissement de 40% → 25% */
+    @keyframes resizeColumns {
+      0% {
+        grid-template-columns: 40% 1fr;
+      }
+      100% {
+        grid-template-columns: 25% 1fr;
+      }
+    }
+
+    /* ===== COLONNE NAVIGATION ===== */
+    .gauche {
+      padding: 50px 40px 50px 60px;
+      border-right: 1px solid #222;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    header h1 {
+      font-size: 30px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.15;
+      cursor: pointer;
+    }
+
+    .fonction {
+      color: #888;
+      font-size: 10px;
+      margin-top: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .menu-principal { margin-top: 45px; display: flex; flex-direction: column; gap: 10px; }
+
+    .menu-principal a {
+      font-size: 11px;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .menu-principal a:hover { color: #fff; }
+
+    .liens-pages {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #222;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .liens-pages a {
+      font-size: 11px;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .liens-pages a:hover { color: #fff; }
+
+    /* ===== COLONNE CONTENU ===== */
+    .colonne-contenu {
+      position: relative;
+      border-right: 1px solid #fff;
+      opacity: 0;
+      transform: translateX(20px);
+      animation: fadeInContent 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes fadeInContent {
+      0% {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Zone texte avec image sticky */
+    .zone-texte {
+      position: relative;
+    }
+
+    .image-hero {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      margin-bottom: -100vh;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .image-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 100%);
+      pointer-events: none;
+    }
+
+    .contenu-texte {
+      position: relative;
+      z-index: 2;
+      padding: 30px 40px 60px;
+    }
+
+    .titre-projet {
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .date-projet {
+      color: #bbb;
+      font-size: 12px;
+      font-weight: 300;
+      margin-bottom: 60px;
+    }
+
+    .texte-projet {
+      color: #e5e5e5;
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.9;
+      margin-bottom: 40px;
+      max-width: 520px;
+    }
+
+    .equipe-titre {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      margin-bottom: 14px;
+    }
+
+    .equipe-liste {
+      font-size: 12px;
+      font-weight: 300;
+      color: #ccc;
+      line-height: 1.9;
+    }
+
+    .galerie {
+      position: relative;
+      z-index: 3;
+      background: #000;
+      padding: 0 40px 60px;
+    }
+
+    .galerie img {
+      width: 100%;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .conteneur { 
+        grid-template-columns: 1fr;
+        animation: none;
+      }
+      .gauche {
+        padding: 30px 24px;
+        border-right: none;
+        border-bottom: 1px solid #222;
+        height: auto;
+        position: relative;
+        width: 100%;
+      }
+      .image-hero { position: relative; height: 50vh; margin-bottom: 0; }
+      .contenu-texte { padding: 30px 24px; }
+      .galerie { padding: 0 24px 40px; border-right: none; }
+      .overlay-transition { display: none; }
+      .colonne-contenu { animation: none; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay-transition"></div>
+
+  <div class="conteneur">
+    <div class="gauche">
+      <header>
+        <a href="index.html"><h1>Jean<br>Doroszczuk</h1></a>
+        <p class="fonction">Chef Opérateur / Vidéaste</p>
+      </header>
+
+      <nav class="menu-principal">
+        <a href="index.html">Retour</a>
+      </nav>
+
+      <div class="liens-pages">
+        <a href="bio.html">Bio</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+
+    <div class="colonne-contenu">
+      <div class="zone-texte">
+        <div class="image-hero">
+          <img src="images_optimized/cinema/autobiographie/autobio-001.webp" alt="Autobiographie — image principale">
+        </div>
+
+        <div class="contenu-texte">
+          <h2 class="titre-projet">Autobiographie d'un blaireau</h2>
+          <p class="date-projet">Cinéma — 2026</p>
+
+          <p class="texte-projet">
+            EN COURS DE POST-PRODUCTION
+          </p>
+
+          <h3 class="equipe-titre">Équipe</h3>
+          <p class="equipe-liste">
+            Réalisation : Isabelle Prim
+          </p>
+
+          <h3 class="equipe-titre" style="margin-top:30px;">Festivals / Diffusions</h3>
+          <p class="equipe-liste">
+          </p>
+        </div>
+    </div>
+  </div>
+</body>
+</html>
